@@ -37,4 +37,4 @@ $BORG prune --keep-daily=7 --keep-weekly=4 --keep-monthly=3 $REPO
 # Send a completion message to the Discord webhook
 MESSAGE="**Borg Backup has been completed.** New archive: **$BACKUP_NAME**"
 curl -H "Content-Type: application/json" -d "{\"content\": \"$MESSAGE\"}" $WEBHOOK_URL
-root@f6d4537e5243:/opt/scripts/xborg#
+
