@@ -10,7 +10,16 @@ RUN apt-get update && \
 ENV BORG_PASSPHRASE_FILE=/root/.borgbackup/password
 
 # Create necessary directories
-RUN mkdir -p /opt/scripts/xborg /root/.borgbackup
+RUN mkdir -p /opt/scripts/xborg /root/.borgbackup /root/.ssh
+
+# Copy the SSH keys and known_hosts file to the container
+COPY id_rsa /root/.ssh/id_rsa
+COPY id_rsa.pub /root/.ssh/id_rsa.pub
+COPY known_hosts /root/.ssh/known_hosts
+
+# Set the proper permissions for the SSH keys
+RUN chmod 600 /root/.ssh/id_rsa && \
+    chmod 644 /root/.ssh/id_rsa.pub /root/.ssh/known_hosts
 
 # Copy the password file into the container
 COPY password /root/.borgbackup/password
