@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: borg-backup-cronjob
+spec:
+  schedule: "0 12 * * *"  # Runs every day at 12 PM (noon)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: borg-backup
+            image: auntie-borg-backup:latest
+            imagePullPolicy: Never
+            volumeMounts:
+            - mountPath: /mnt/storageroot
+              name: storage
+          restartPolicy: OnFailure
+          volumes:
+          - name: storage
+            hostPath:
+              path: /mnt/storageroot  # Ensure this is mounted on your worker node
+      ttlSecondsAfterFinished: 86400  # Keeps the job for a day before cleaning up
