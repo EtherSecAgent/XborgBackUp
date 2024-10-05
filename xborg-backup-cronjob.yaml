@@ -8,6 +8,8 @@ spec:
     spec:
       template:
         spec:
+          nodeSelector:
+            kubernetes.io/hostname: k3s-worker-00  # Replace with the actual name of your worker node
           containers:
           - name: borg-backup
             image: auntie-borg-backup:latest
